@@ -1,0 +1,68 @@
+// 2
+const people = [1,1,1,1,1,1,1,2,1,1,1,1]
+var divide = 0
+var count = 0
+
+const findHeavy = (array, index) => {
+    if (array.length > 1) {
+        if(array.length < 3) {
+            divide = Math.floor(array.length/2)
+        }
+        else {
+            divide = Math.floor(array.length/3)
+        }
+        const part_one = array.slice(0,divide)
+        const part_two = array.slice(divide,divide*2)
+        const part_three = array.slice(divide*2,array.length)
+
+        const reducer = (a,b) => a+b
+
+        if (part_one.reduce(reducer) > part_two.reduce(reducer)) {
+            findHeavy(part_one, index)
+        }
+
+        else if (part_one.reduce(reducer) === part_two.reduce(reducer)) {
+            findHeavy(part_three, index+(divide*2))
+        }
+
+        else {
+            findHeavy(part_two, index+divide)
+        }
+    }
+    else {
+        console.log(index);
+    }
+}
+
+findHeavy(people, 0)
+
+// 3
+const price = 30000
+const year = 5
+
+const incresePerYear = price/year
+
+console.log(incresePerYear);
+
+// 4
+const nums = [2,7,11,15]
+const target = 9
+
+var temp = []
+var result = []
+const findIndexPossible = (array,index, sum) => {
+    if(sum === 0) {
+        result.push([...temp])
+    }
+
+    for (let i=index;i<array.length;i++) {
+        if(sum-array[i] >= 0) {
+            temp.push(i)
+            findIndexPossible(array, i+1, sum-array[i])
+            temp.pop()
+        }
+    }
+}
+
+findIndexPossible(nums, 0, target)
+console.log(result);
